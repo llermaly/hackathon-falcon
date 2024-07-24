@@ -104,8 +104,8 @@ export const postRouter = createTRPCRouter({
     )
     .mutation(async ({ input, ctx }) => {
       const llm = new ChatOpenAI({
-        model: "gpt-4o",
-        temperature: 0,
+        model: "gpt-4o-mini",
+        temperature: 0.2,
       });
 
       const functionCallingModel = llm.bind({
