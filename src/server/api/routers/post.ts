@@ -59,6 +59,13 @@ type Course = {
 
 export type RecommendationsData = z.infer<typeof skillsRecommendationSchema>;
 export type Recommendation = z.infer<typeof skillRecommendationSchema>;
+export type RecommendationWithCourse = Recommendation & { course: Course };
+
+const udemyClientId = process.env.UDEMY_CLIENT_ID;
+const udemyClientSecret = process.env.UDEMY_CLIENT_SECRET;
+const credentials = `${udemyClientId}:${udemyClientSecret}`;
+const buff = Buffer.from(credentials);
+const udemyAuth = buff.toString("base64");
 
 export const postRouter = createTRPCRouter({
   hello: publicProcedure
@@ -96,15 +103,6 @@ export const postRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ input, ctx }) => {
-      const udemyClientId = process.env.UDEMY_CLIENT_ID;
-      const udemyClientSecret = process.env.UDEMY_CLIENT_SECRET;
-
-      const credentials = `${udemyClientId}:${udemyClientSecret}`;
-
-      const buff = Buffer.from(credentials);
-
-      const base64data = buff.toString("base64");
-
       const llm = new ChatOpenAI({
         model: "gpt-4o",
         temperature: 0,
@@ -138,7 +136,7 @@ export const postRouter = createTRPCRouter({
             "https://www.udemy.com/api-2.0/courses/",
             {
               headers: {
-                Authorization: `Basic ${base64data}`,
+                Authorization: `Basic ${udemyAuth}`,
                 Accept: "application/json, text/plain, */*",
                 "Content-Type": "application/json",
               },
@@ -166,6 +164,39 @@ export const postRouter = createTRPCRouter({
 
       const sorted = dataWithCourses.sort((a, b) => a.order - b.order);
 
-      return sorted as (Recommendation & { course: Course })[];
+      return sorted as RecommendationWithCourse[];
+    }),
+
+  getCourseBySkill: publicProcedure
+    .input(
+      z.object({
+        skill: z.string(),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      const udemyResponse = await axios.get(
+        "https://www.udemy.com/api-2.0/courses/",
+        {
+          headers: {
+            Authorization: `Basic ${udemyAuth}`,
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+          },
+          params: {
+            search: input.skill,
+            page_size: 5,
+          },
+        },
+      );
+
+      const skillCourses = udemyResponse.data.results.map((r: any) => ({
+        title: r.title,
+        url: `https://udemy.com${r.url}`,
+        price: r.price,
+        image: r.image_480x270,
+        headline: r.headline,
+      }));
+
+      return skillCourses as Course[];
     }),
 });
