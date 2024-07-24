@@ -70,7 +70,9 @@ const Recommendation = () => {
         >
           <img src={r.course.image} alt={r.skill} />
           <div className="card-body bg-white">
-            <h2 className="card-title text-black">{r.skill}</h2>
+            <h2 className="card-title text-black">
+              {r.order}. {r.skill}
+            </h2>
             <p>{r.description}</p>
             <div>
               <p>Why {r.skill}?</p>

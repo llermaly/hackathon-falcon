@@ -96,83 +96,6 @@ export const postRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ input, ctx }) => {
-      const data = {
-        recommendations: [
-          {
-            skill: "JavaScript",
-            description:
-              "JavaScript is essential for front-end development, allowing you to create interactive web pages.",
-            order: 1,
-            order_justification:
-              "JavaScript builds on your existing knowledge of HTML and CSS, enabling you to create dynamic and interactive user interfaces.",
-          },
-          {
-            skill: "Version Control (Git)",
-            description:
-              "Version control systems like Git are crucial for managing code changes and collaborating with other developers.",
-            order: 2,
-            order_justification:
-              "Learning Git early will help you manage your codebase effectively and collaborate with others as you progress in your development journey.",
-          },
-          {
-            skill: "React.js",
-            description:
-              "React.js is a popular front-end library for building user interfaces, making it easier to manage the state and structure of your web applications.",
-            order: 3,
-            order_justification:
-              "React.js leverages your JavaScript skills and helps you build more complex and efficient front-end applications.",
-          },
-          {
-            skill: "Node.js",
-            description:
-              "Node.js allows you to run JavaScript on the server side, enabling you to build scalable and high-performance back-end applications.",
-            order: 4,
-            order_justification:
-              "Node.js will extend your JavaScript knowledge to the server side, making you proficient in both front-end and back-end development.",
-          },
-          {
-            skill: "Express.js",
-            description:
-              "Express.js is a web application framework for Node.js, simplifying the process of building robust and scalable server-side applications.",
-            order: 5,
-            order_justification:
-              "Express.js builds on your Node.js knowledge, providing a structured framework for developing back-end applications.",
-          },
-          {
-            skill: "Database Management (SQL/NoSQL)",
-            description:
-              "Understanding databases is crucial for back-end development, allowing you to store, retrieve, and manage data efficiently.",
-            order: 6,
-            order_justification:
-              "Database management skills are essential for full-stack development, enabling you to handle data storage and retrieval in your applications.",
-          },
-          {
-            skill: "RESTful APIs",
-            description:
-              "RESTful APIs are a standard way to enable communication between the front-end and back-end of web applications.",
-            order: 7,
-            order_justification:
-              "Learning to create and consume RESTful APIs will allow you to integrate different parts of your application and interact with external services.",
-          },
-          {
-            skill: "Authentication and Authorization",
-            description:
-              "Implementing authentication and authorization is critical for securing web applications and managing user access.",
-            order: 8,
-            order_justification:
-              "Security is a fundamental aspect of web development, and understanding authentication and authorization will help you build secure applications.",
-          },
-          {
-            skill: "DevOps Basics",
-            description:
-              "Basic DevOps skills, including continuous integration and deployment, are important for automating and streamlining the development process.",
-            order: 9,
-            order_justification:
-              "DevOps skills will help you manage the deployment and maintenance of your applications, ensuring they run smoothly in production environments.",
-          },
-        ],
-      };
-
       const udemyClientId = process.env.UDEMY_CLIENT_ID;
       const udemyClientSecret = process.env.UDEMY_CLIENT_SECRET;
 
@@ -204,13 +127,13 @@ export const postRouter = createTRPCRouter({
         .pipe(functionCallingModel)
         .pipe(outputParser);
 
-      // const data = await chain.invoke({
-      //   currentSkills: input.currentSkills,
-      //   futureGoals: input.futureGoals,
-      // });
+      const data = await chain.invoke({
+        currentSkills: input.currentSkills,
+        futureGoals: input.futureGoals,
+      });
 
       const dataWithCourses = await Promise.all(
-        data.recommendations.map(async (r) => {
+        (data as RecommendationsData).recommendations.map(async (r) => {
           const udemyResponse = await axios.get(
             "https://www.udemy.com/api-2.0/courses/",
             {
