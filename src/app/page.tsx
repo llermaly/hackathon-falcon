@@ -1,6 +1,5 @@
 import { HydrateClient } from "@/trpc/server";
 import Recommendation from "@/components/recommendation";
-import Flow from "@/components/flow";
 
 export default async function Home() {
   return (
