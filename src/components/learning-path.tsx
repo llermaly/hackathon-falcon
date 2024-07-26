@@ -12,6 +12,7 @@ import { IoSaveOutline } from "react-icons/io5";
 import { FaClipboard } from "react-icons/fa";
 import { FaClipboardCheck } from "react-icons/fa";
 import { useRouter, useSearchParams } from "next/navigation";
+import CourseChangeCard from "./course-change-card";
 
 const responsive = {
   superLargeDesktop: {
@@ -80,6 +81,10 @@ const LearningPath = () => {
   const showLoadButton =
     requiredData.length === 0 && desirableData.length === 0;
 
+  const getSkillCourses = api.post.getCourseBySkill.useMutation();
+
+  const [editingSkillId, setEditingSkillId] = React.useState("");
+
   const handleLoadLearningPath = () => {
     if (
       !currentSkills ||
@@ -103,7 +108,6 @@ const LearningPath = () => {
         onSuccess: (data) => {
           setRequiredData(data.requiredSkills);
           setDesirableData(data.desirableSkills);
-          console.log(data);
         },
         onError: (error) => {
           toast.error("Could not retrieve a learning path.");
@@ -270,7 +274,7 @@ const LearningPath = () => {
               <li
                 key={i}
                 data-content={item.active ? "✓" : i + 1}
-                className={`step mx-1 min-w-[6rem] text-xs font-semibold text-black ${item.active ? "step-primary" : ""}`}
+                className={`step mx-1 min-w-[8rem] text-xs font-semibold text-black ${item.active ? "step-primary" : ""}`}
               >
                 <div className="tooltip z-50" data-tip={item.skill}>
                   {" "}
@@ -283,7 +287,9 @@ const LearningPath = () => {
       </div>
       <div className="mt-2">
         <div className="flex items-center gap-2 py-2">
-          <span className="text-xl text-gray-500">Required</span>
+          <span className="w-[160px] text-xl text-gray-500">
+            Required ({requiredData.length})
+          </span>{" "}
           <div className="h-[2px] w-full bg-gray-200" />
         </div>
 
@@ -303,6 +309,20 @@ const LearningPath = () => {
                     ),
                   );
                 }}
+                onClickRemove={(item) => {
+                  setRequiredData((prev) =>
+                    prev.filter((i) => i.id !== item.id),
+                  );
+                }}
+                onClickChange={(item) => {
+                  setEditingSkillId(item.id);
+
+                  getSkillCourses.mutate({ skill: item.skill, id: item.id });
+
+                  (document as any)
+                    .getElementById("change_course_modal")
+                    .showModal();
+                }}
               />
             </div>
           ))}
@@ -310,7 +330,9 @@ const LearningPath = () => {
       </div>
       <div className="mt-2">
         <div className="flex items-center gap-2 py-2">
-          <span className="text-xl text-gray-500">Desirable</span>
+          <span className="w-[160px] text-xl text-gray-500">
+            Desirable ({desirableData.length})
+          </span>
           <div className="h-[2px] w-full bg-gray-200" />
         </div>
 
@@ -331,11 +353,70 @@ const LearningPath = () => {
                     ),
                   );
                 }}
+                onClickRemove={(item) => {
+                  setDesirableData((prev) =>
+                    prev.filter((i) => i.id !== item.id),
+                  );
+                }}
+                onClickChange={(item) => {
+                  setEditingSkillId(item.id);
+
+                  getSkillCourses.mutate({ skill: item.skill, id: item.id });
+
+                  (document as any)
+                    .getElementById("change_course_modal")
+                    .showModal();
+                }}
               />
             </div>
           ))}
         </Carousel>
       </div>
+
+      <dialog id="change_course_modal" className="modal">
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
+        <div className="modal-box w-full max-w-4xl">
+          <h3 className="mb-4 text-lg font-bold">
+            Select your favorite course
+          </h3>
+          {getSkillCourses.isPending && (
+            <div className="flex gap-8">
+              <div className="skeleton h-[295px] w-[250px]"></div>
+              <div className="skeleton h-[295px] w-[250px]"></div>
+              <div className="skeleton h-[295px] w-[250px]"></div>
+            </div>
+          )}
+          {getSkillCourses.data && getSkillCourses.data.length > 0 && (
+            <Carousel responsive={responsive}>
+              {getSkillCourses.data?.map((c) => (
+                <CourseChangeCard
+                  key={c.id}
+                  item={c}
+                  onClickSelect={(item) => {
+                    setRequiredData((prev) =>
+                      prev.map((p) =>
+                        p.id === item.id ? { ...p, course: item.course } : p,
+                      ),
+                    );
+
+                    setDesirableData((prev) =>
+                      prev.map((p) =>
+                        p.id === item.id ? { ...p, course: item.course } : p,
+                      ),
+                    );
+
+                    (document as any)
+                      .getElementById("change_course_modal")
+                      .close();
+                  }}
+                />
+              ))}
+            </Carousel>
+          )}
+        </div>
+      </dialog>
     </div>
   );
 };

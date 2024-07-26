@@ -50,7 +50,6 @@ const NewJob = () => {
       { text: newJobText },
       {
         onSuccess: (data) => {
-          console.log(data);
           setRequiredSkills((prev) => [...prev, ...data.required_skills]);
           setDesirableSkills((prev) => [...prev, ...data.desirable_skills]);
           setNewJobTitle(data.job_title);

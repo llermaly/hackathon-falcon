@@ -217,6 +217,7 @@ export const postRouter = createTRPCRouter({
     .input(
       z.object({
         skill: z.string(),
+        id: z.string(),
       }),
     )
     .mutation(async ({ input }) => {
@@ -243,7 +244,17 @@ export const postRouter = createTRPCRouter({
         headline: r.headline,
       }));
 
-      return skillCourses as Course[];
+      const data: RecommendationWithCourse[] = skillCourses.map((r: any) => ({
+        skill: r.title,
+        description: r.headline,
+        order: 0,
+        order_justification: "",
+        course: r,
+        active: false,
+        id: input.id,
+      }));
+
+      return data as RecommendationWithCourse[];
     }),
   extractSkills: publicProcedure
     .input(
