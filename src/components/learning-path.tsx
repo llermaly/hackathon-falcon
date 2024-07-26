@@ -119,7 +119,9 @@ const LearningPath = () => {
 
   const getCompletedPercentage = () => {
     const total = requiredData.length + desirableData.length;
-    const completed = requiredData.filter((i) => i.active).length;
+    const completedRequired = requiredData.filter((i) => i.active).length;
+    const completedDesirable = desirableData.filter((i) => i.active).length;
+    const completed = completedRequired + completedDesirable;
     return Math.round((completed / total) * 100);
   };
 
