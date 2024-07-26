@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <Suspense>
       <AppProvider>
-        <div className="px-4 pt-8">
+        <div className="px-4 pb-24 pt-8">
           <h1 className="mb-4 px-4 text-center text-3xl font-bold text-white">
             Destiny Crafter
           </h1>
