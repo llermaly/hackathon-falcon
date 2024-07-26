@@ -72,13 +72,13 @@ const CourseCard = ({
             <div className="tooltip" data-tip="Change">
               <MdChangeCircle
                 onClick={() => onClickChange?.(item)}
-                className="h-4 w-4 cursor-pointer text-black"
+                className={`h-4 w-4 cursor-pointer ${text}`}
               />
             </div>
             <div className="tooltip" data-tip="Remove">
               <TbTrashXFilled
                 onClick={() => onClickRemove?.(item)}
-                className="h-4 w-4 cursor-pointer text-black"
+                className={`h-4 w-4 cursor-pointer ${text}`}
               />
             </div>
           </div>

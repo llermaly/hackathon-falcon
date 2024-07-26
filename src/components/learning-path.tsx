@@ -161,7 +161,7 @@ const LearningPath = () => {
           toast.success("Learning path saved successfully");
           if (!pathId) {
             router.push(`?path=${data.id}`);
-            setPathUrl(window?.location?.href + "path/" + data?.id);
+            setPathUrl(window?.location?.href + "?path=" + data?.id);
             (document as any).getElementById("saved_path_modal")?.showModal();
           }
         },
