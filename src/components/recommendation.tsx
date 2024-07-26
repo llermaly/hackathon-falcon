@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 const Recommendation = () => {
   const getSkillRecommendations =
     api.post.getSkillRecommendations.useMutation();
+  const [data, setData] = React.useState<RecommendationWithCourse[]>([]);
 
   const getSkillCourses = api.post.getCourseBySkill.useMutation();
 
@@ -14,8 +15,6 @@ const Recommendation = () => {
   const [futureGoals, setFutureGoals] = React.useState("Full-stack developer");
 
   const [editingCourse, setEditingCourse] = React.useState("");
-
-  const [data, setData] = React.useState<RecommendationWithCourse[]>([]);
 
   const handleSubmit = async () => {
     getSkillRecommendations.mutate(
@@ -89,9 +88,7 @@ const Recommendation = () => {
               <button
                 className="btn btn-secondary"
                 onClick={() => {
-                  setData((prev) =>
-                    prev.filter((p) => p.course.url !== r.course.url),
-                  );
+                  setData((prev) => prev.filter((p) => p.id !== r.id));
                 }}
               >
                 Remove
@@ -99,7 +96,7 @@ const Recommendation = () => {
               <button
                 className="btn"
                 onClick={() => {
-                  setEditingCourse(r.course.url);
+                  setEditingCourse(r.id);
 
                   getSkillCourses.mutate({ skill: r.skill });
 
