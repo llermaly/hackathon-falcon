@@ -81,15 +81,17 @@ const CurrentJob = () => {
           accept={".pdf"}
         />
         <div className="flex h-48 w-[150px] cursor-pointer items-center justify-center rounded-md border bg-primary p-2 text-center text-xs text-white">
-          {file ? (
-            isLoadingPDF ? (
-              <span className="loading loading-spinner loading-sm"></span>
+          <div className="max-w-[130px] break-words px-4">
+            {file ? (
+              isLoadingPDF ? (
+                <span className="loading loading-spinner loading-sm"></span>
+              ) : (
+                file.name
+              )
             ) : (
-              file.name
-            )
-          ) : (
-            "Click to extract skills from PDF"
-          )}
+              "Click to extract skills from PDF"
+            )}
+          </div>
         </div>
       </label>
       <div className="w-full">
