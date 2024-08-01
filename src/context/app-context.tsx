@@ -1,4 +1,4 @@
-import { RecommendationWithCourse } from "@/server/api/routers/post";
+import { RecommendationWithCourse } from "@/server/utils/schemas";
 import { createContext, Dispatch, SetStateAction, useState } from "react";
 
 interface AppContextProps {

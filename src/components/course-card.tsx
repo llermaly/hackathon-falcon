@@ -2,10 +2,10 @@ import React from "react";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { FaStar } from "react-icons/fa6";
 import { FaCheck } from "react-icons/fa";
-import { RecommendationWithCourse } from "@/server/api/routers/post";
 import { shortenString } from "./new-job";
 import { TbTrashXFilled } from "react-icons/tb";
 import { MdChangeCircle } from "react-icons/md";
+import { RecommendationWithCourse } from "@/server/utils/schemas";
 
 const CourseCard = ({
   isActive,

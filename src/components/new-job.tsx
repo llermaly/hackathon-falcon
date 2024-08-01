@@ -15,9 +15,9 @@ export const shortenString = (str: string, maxLen: number) => {
 };
 
 const NewJob = () => {
-  const extractSkills = api.post.extractSkills.useMutation();
+  const extractSkills = api.destiny.extractSkills.useMutation();
 
-  const extractSkillsDetailed = api.post.extractSkillsDetailed.useMutation();
+  const extractSkillsDetailed = api.destiny.extractSkillsDetailed.useMutation();
 
   const [extractMode, setExtractMode] = React.useState(false);
 

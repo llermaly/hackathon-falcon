@@ -9,7 +9,7 @@ import Button from "./button";
 import useApp from "@/hooks/use-app";
 
 const CurrentJob = () => {
-  const extractSkills = api.post.extractSkills.useMutation();
+  const extractSkills = api.destiny.extractSkills.useMutation();
 
   const [file, setFile] = React.useState<File | null>(null);
   const [isLoadingPDF, setIsLoadingPDF] = React.useState(false);

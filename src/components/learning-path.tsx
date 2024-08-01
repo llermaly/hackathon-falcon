@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import CourseCard from "./course-card";
 import { api } from "@/trpc/react";
 import { toast } from "react-toastify";
-import { RecommendationWithCourse } from "@/server/api/routers/post";
+
 import Carousel from "react-multi-carousel";
 import { shortenString } from "./new-job";
 import Button from "./button";
@@ -13,6 +13,7 @@ import { FaClipboard } from "react-icons/fa";
 import { FaClipboardCheck } from "react-icons/fa";
 import { useRouter, useSearchParams } from "next/navigation";
 import CourseChangeCard from "./course-change-card";
+import { RecommendationWithCourse } from "@/server/utils/schemas";
 
 const responsive = {
   superLargeDesktop: {
@@ -56,15 +57,15 @@ const LearningPath = () => {
 
   const pathId = queryparams.get("path");
 
-  const saveLearningPath = api.post.saveLearningPath.useMutation();
+  const saveLearningPath = api.destiny.saveLearningPath.useMutation();
 
-  const learningPath = api.post.getLearningPath.useQuery(pathId as string, {
+  const learningPath = api.destiny.getLearningPath.useQuery(pathId as string, {
     enabled: !!pathId,
     staleTime: Infinity,
   });
 
   const getSkillRecommendations =
-    api.post.getSkillRecommendations.useMutation();
+    api.destiny.getSkillRecommendations.useMutation();
 
   const [requiredData, setRequiredData] = React.useState<
     RecommendationWithCourse[]
@@ -81,7 +82,7 @@ const LearningPath = () => {
   const showLoadButton =
     requiredData.length === 0 && desirableData.length === 0;
 
-  const getSkillCourses = api.post.getCourseBySkill.useMutation();
+  const getSkillCourses = api.destiny.getCourseBySkill.useMutation();
 
   const [editingSkillId, setEditingSkillId] = React.useState("");
 
