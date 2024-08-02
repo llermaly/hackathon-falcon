@@ -16,6 +16,7 @@ interface AppContextProps {
   setDesirableData: Dispatch<SetStateAction<RecommendationWithCourse[]>>;
   futureGoals: string;
   currentSkills: string;
+  handleLoadExamples: () => void;
 }
 
 export const AppContext = createContext({} as AppContextProps);
@@ -24,11 +25,21 @@ interface AppProviderProps {
   children: React.ReactNode;
 }
 
+const exampleSkills = ["HTML", "CSS", "Javascript"];
+const exampleRequiredSkills = ["Typescript", "Python", "ReactJS", "Github"];
+const exampleDesirableSkills = ["Jest", "React Native", "AWS", "Docker"];
+
 export const AppProvider = ({ children }: AppProviderProps) => {
   const [skills, setSkills] = useState<string[]>([]);
 
   const [requiredSkills, setRequiredSkills] = useState<string[]>([]);
   const [desirableSkills, setDesirableSkills] = useState<string[]>([]);
+
+  const handleLoadExamples = () => {
+    setSkills(exampleSkills);
+    setRequiredSkills(exampleRequiredSkills);
+    setDesirableSkills(exampleDesirableSkills);
+  };
 
   const [newJobTitle, setNewJobTitle] = useState("Your new job name");
 
@@ -63,6 +74,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         setDesirableData,
         futureGoals,
         currentSkills,
+        handleLoadExamples,
       }}
     >
       {children}

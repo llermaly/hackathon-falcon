@@ -5,6 +5,8 @@ import NewJob from "@/components/new-job";
 import LearningPath from "@/components/learning-path";
 import { AppProvider } from "@/context/app-context";
 import { Suspense } from "react";
+import Button from "@/components/button";
+import LoadExampleButton from "@/components/load-example-btn";
 
 export default function Home() {
   return (
@@ -21,9 +23,7 @@ export default function Home() {
                   <span className="text-sm font-semibold uppercase text-blue-600">
                     Career
                   </span>
-                  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-600">
-                    <FaChevronRight className="h-3 text-white" />
-                  </div>
+                  <LoadExampleButton />
                 </div>
                 <div className="mt-4">
                   <p className="text-xl font-semibold text-black">

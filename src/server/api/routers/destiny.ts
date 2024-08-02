@@ -100,7 +100,7 @@ export const destinyRouter = createTRPCRouter({
         size: 5,
       });
 
-      const skillCourses = udemyResponse.data.results.map((r: any) => ({
+      const skillCourses = udemyResponse.results.map((r: any) => ({
         title: r.title,
         url: `https://udemy.com${r.url}`,
         price: r.price,
