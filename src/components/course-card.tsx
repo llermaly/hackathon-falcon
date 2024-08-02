@@ -32,7 +32,7 @@ const CourseCard = ({
   const textSecondary = isActive ? "text-white" : "text-gray-500";
 
   return (
-    <div className={`h-[305px] w-[250px] rounded-md p-2.5 ${bg}`}>
+    <div className={`h-[295px] w-[250px] rounded-md p-2.5 ${bg}`}>
       <div className="relative">
         <FaExternalLinkAlt
           onClick={() => window.open(item.course.url, "_blank")}
