@@ -14,7 +14,7 @@ export default function Home() {
       <AppProvider>
         <div className="px-4 pb-24 pt-8">
           <h1 className="mb-4 px-4 text-center text-3xl font-bold text-white">
-            Destiny Crafter
+            Coursepath.ai
           </h1>
           <main className="mx-auto max-w-[1400px] rounded-md bg-white bg-opacity-30 p-8">
             <div className="grid grid-cols-12 gap-8">

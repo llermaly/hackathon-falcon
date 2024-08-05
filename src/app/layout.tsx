@@ -7,7 +7,7 @@ import "react-multi-carousel/lib/styles.css";
 import { TRPCReactProvider } from "@/trpc/react";
 
 export const metadata: Metadata = {
-  title: "Destiny Crafter",
+  title: "Coursepath.ai",
   description: "Craft your destiny",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
