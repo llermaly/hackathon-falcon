@@ -4,6 +4,10 @@ This is our submission for the lablabai [Falcon Hackathon](https://lablab.ai/eve
 
 You can use the "Load example" button to load testing data, or add your current skills and required skillset using the load buttons.
 
+Implementing Falcon is very simple!, we did it here:
+
+https://github.com/llermaly/hackathon-falcon/blob/main/src/server/utils/llm.ts
+
 ## Quickstart
 
 1. configure `.env` variables
