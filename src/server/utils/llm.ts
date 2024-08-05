@@ -1,7 +1,7 @@
 import { ChatOpenAI } from "@langchain/openai";
 
 export const llm = new ChatOpenAI({
-  model: "tiiuae/falcon-180B-chat",
+  model: "tiiuae/falcon-180B",
   temperature: 0,
   apiKey: process.env.A71_API_KEY,
   configuration: {

@@ -34,7 +34,7 @@ const CourseChangeCard = ({
           onClick={() => window.open(item.course.url, "_blank")}
           className="absolute left-2 top-2 h-4 cursor-pointer text-white"
         />
-        <img src={item.course.image} className="rounded-md" />
+        <img src={item?.course?.image} className="rounded-md" />
       </div>
       <div className="flex h-[140px] flex-col justify-between pt-3">
         <div>

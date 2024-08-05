@@ -38,7 +38,7 @@ const CourseCard = ({
           onClick={() => window.open(item.course.url, "_blank")}
           className="absolute left-2 top-2 h-4 cursor-pointer text-white"
         />
-        <img src={item.course.image} className="rounded-md" />
+        <img src={item?.course?.image} className="rounded-md" />
 
         <div
           title={isActive ? "Completed" : "Uncompleted"}
